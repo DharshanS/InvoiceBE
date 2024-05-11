@@ -1,5 +1,6 @@
 package com.nttd.interview.invoice.controller;
 
+import com.nttd.interview.invoice.exception.InvoiceNotAddedException;
 import com.nttd.interview.invoice.exception.InvoiceNotFoundException;
 import com.nttd.interview.invoice.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,13 @@ import org.springframework.web.context.request.WebRequest;
 public class InvoiceGlobalExceptionHandler {
     @ExceptionHandler(InvoiceNotFoundException.class)
     public ResponseEntity<Object> handleResourceNotFoundException(
+            InvoiceNotFoundException ex, WebRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvoiceNotAddedException.class)
+    public ResponseEntity<Object> handleResourceNotAddedException(
             InvoiceNotFoundException ex, WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);

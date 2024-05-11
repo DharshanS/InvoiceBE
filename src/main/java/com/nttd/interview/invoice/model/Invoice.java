@@ -12,5 +12,6 @@ public class Invoice {
     private String email;
     private Date invoiceDate;
     private Double amount;
+    private String status;
 
 }
